@@ -1,0 +1,37 @@
+---
+title: "index"
+author: "Chen, Shiyao"
+date: "2024-06-07"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(scatterplot3d) #画3D图
+library(plotly) #画互动图
+library(factoextra)
+library(ggplot2)
+library(tidyr)
+library(ggrepel)
+```
+
+```{r}
+head(mtcars)
+d1 <- mtcars[,c(-8,-9)] #删去第8，9列 
+names(d1)
+pca.1 <- prcomp(d1, scale.=T)
+summary(pca.1)
+fviz_pca_biplot(pca.1)
+fviz_pca_biplot(pca.1, col.var = "black",
+ col.ind = "red2",
+ label = "var") +
+ labs(x="PC1 (62.8%)",
+ y="PC2 (23.1%)",
+ title=NULL)+
+ theme_bw()+
+ geom_text_repel(aes(label=row.names(d1)),
+ color="grey40", size=2.5)
+```
